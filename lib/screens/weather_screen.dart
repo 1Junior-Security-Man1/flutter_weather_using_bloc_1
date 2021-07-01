@@ -87,6 +87,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         return _completer.future;
                       },
                       child: Container(
+                        padding: EdgeInsets.only(top: 140),
                         color: themeState.backgroundColor,
                         child: ListView(
                           children: <Widget>[
@@ -95,17 +96,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 Text(
                                   weather.location,
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 35,
                                       fontWeight: FontWeight.bold,
                                       color: themeState.textColor
                                   ),
                                 ),
-                                Padding(padding: EdgeInsets.symmetric(vertical: 2),),
+                                Padding(padding: EdgeInsets.symmetric(vertical: 1),),
                                 Center(
                                   child: Text(
                                     'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 12,
                                         color: themeState.textColor
                                     ),
                                   ),
