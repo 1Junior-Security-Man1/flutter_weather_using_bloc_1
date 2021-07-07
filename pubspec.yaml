@@ -31,7 +31,9 @@ dependencies:
   flutter_bloc: ^7.0.1
   http: ^0.13.3
   equatable: ^2.0.3
-  weather_icons: ^2.0.2
+  connectivity: ^3.0.6
+  overlay_support: ^1.2.1
+  location: ^4.3.0
 
 dev_dependencies:
   flutter_test:

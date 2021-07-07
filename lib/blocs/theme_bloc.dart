@@ -19,7 +19,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState>{
           weatherCondition == WeatherCondition.lightCloud) {
         newThemeState = ThemeState(
             backgroundColor: Colors.yellow,
-            textColor: Colors.black
+            textColor: Colors.white
         );
       } else if(weatherCondition == WeatherCondition.hail ||
           weatherCondition == WeatherCondition.snow ||
@@ -31,7 +31,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState>{
       }  else if(weatherCondition == WeatherCondition.heavyCloud) {
         newThemeState = ThemeState(
             backgroundColor: Colors.grey,
-            textColor: Colors.black
+            textColor: Colors.white
         );
       } else if(weatherCondition == WeatherCondition.heavyRain ||
           weatherCondition == WeatherCondition.lightRain ||

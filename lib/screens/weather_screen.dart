@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,17 +13,22 @@ import 'package:flutter_weather_using_bloc_1/screens/temperature_widget.dart';
 import 'package:flutter_weather_using_bloc_1/states/theme_state.dart';
 import 'package:flutter_weather_using_bloc_1/states/weather_state.dart';
 
+import '../utils.dart';
+
 class WeatherScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _WeatherScreenState();
 }
+
 class _WeatherScreenState extends State<WeatherScreen> {
   Completer<void> _completer;
+
   @override
   void initState() {
     super.initState();
     _completer = Completer<void>();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +55,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     builder: (context) => CitySearchScreen()
                 ),
               );
-              if(typedCity != null) {
+              if (typedCity != null) {
                 BlocProvider.of<WeatherBloc>(context).add(
                     WeatherEventRequested(city: typedCity)
                 );
@@ -61,7 +67,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
       body: Center(
         child: BlocConsumer<WeatherBloc, WeatherState>(
             listener: (context, weatherState) {
-              if(weatherState is WeatherStateSuccess) {
+              if (weatherState is WeatherStateSuccess) {
                 BlocProvider.of<ThemeBloc>(context).add(
                     ThemeEventWeatherChanged(
                         weatherCondition: weatherState.weather.weatherCondition)
@@ -71,15 +77,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
               }
             },
             builder: (context, weatherState) {
-              if(weatherState is WeatherStateLoading) {
+              if (weatherState is WeatherStateLoading) {
                 return Center(child: CircularProgressIndicator());
               }
-              if(weatherState is WeatherStateSuccess) {
+              if (weatherState is WeatherStateSuccess) {
                 final weather = weatherState.weather;
                 return BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (context, themeState){
+                  builder: (context, themeState) {
                     return RefreshIndicator(
-                      onRefresh: (){
+                      onRefresh: () async {
+                        final result = await Connectivity().checkConnectivity();
+                        showConnectivitySnackBar(result);
                         BlocProvider.of<WeatherBloc>(context).add(
                             WeatherEventRefresh(city: weather.location)
                         );
@@ -87,7 +95,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         return _completer.future;
                       },
                       child: Container(
-                        padding: EdgeInsets.only(top: 140),
+                        padding: EdgeInsets.only(top: 160),
                         color: themeState.backgroundColor,
                         child: ListView(
                           children: <Widget>[
@@ -96,15 +104,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 Text(
                                   weather.location,
                                   style: TextStyle(
-                                      fontSize: 35,
+                                      fontSize: 40,
                                       fontWeight: FontWeight.bold,
                                       color: themeState.textColor
                                   ),
                                 ),
-                                Padding(padding: EdgeInsets.symmetric(vertical: 1),),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 1),),
                                 Center(
                                   child: Text(
-                                    'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
+                                    'Updated: ${TimeOfDay.fromDateTime(
+                                        weather.lastUpdated).format(context)}',
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: themeState.textColor
@@ -114,7 +124,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 //show more here, put together inside a Widget
                                 TemperatureWidget(
                                   weather: weather,
-                                )
+                                ),
                               ],
                             )
                           ],
@@ -124,7 +134,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   },
                 );
               }
-              if(weatherState is WeatherStateFailure) {
+              if (weatherState is WeatherStateFailure) {
                 return Text(
                   'Something went wrong',
                   style: TextStyle(color: Colors.redAccent, fontSize: 16),
@@ -133,10 +143,20 @@ class _WeatherScreenState extends State<WeatherScreen> {
               return Center(child: Text(
                 'select a location first !',
                 style: TextStyle(fontSize: 30),
-              ),);
+              ),
+              );
             }
         ),
       ),
     );
+  }
+
+  void showConnectivitySnackBar(ConnectivityResult result) {
+    final hasInternet = result != ConnectivityResult.none;
+    final message = hasInternet
+    ? 'You have again ${result.toString()}'
+        : 'You have not internet';
+    final color = hasInternet ? Colors.green : Colors.red;
+    Utils.showTopSnackBar(context, message, color);
   }
 }

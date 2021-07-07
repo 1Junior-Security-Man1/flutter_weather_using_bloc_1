@@ -6,7 +6,6 @@ import 'package:flutter_weather_using_bloc_1/blocs/theme_bloc.dart';
 import 'package:flutter_weather_using_bloc_1/models/weather.dart';
 import 'package:flutter_weather_using_bloc_1/states/settings_state.dart';
 import 'package:flutter_weather_using_bloc_1/states/theme_state.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 class TemperatureWidget extends StatelessWidget {
   final Weather weather;
@@ -26,51 +25,51 @@ class TemperatureWidget extends StatelessWidget {
 
   Image _mapWeatherConditionToIcon({WeatherCondition weatherCondition}) {
     Image image;
-    Text text;
+    String str;
     switch (weatherCondition) {
       case WeatherCondition.clear:
         image = Image.asset('assets/image/summer.png');
-        text = Text('Clear');
+        str = 'Clear';
         break;
       case WeatherCondition.lightCloud:
         image = Image.asset('assets/image/partly-cloudy-day.png');
-        text = Text('Light Cloud');
+        str = 'Light Cloud';
         break;
       case WeatherCondition.hail:
         image = Image.asset('assets/image/hail.png');
-        text = Text('Hail');
+        str = 'Hail';
         break;
       case WeatherCondition.snow:
       image = Image.asset('assets/image/snow.png');
-      text = Text('Snow');
-      break;
+        str = 'Snow';
+        break;
       case WeatherCondition.sleet:
         image = Image.asset('assets/image/sleet.png');
-        text = Text('Sleet');
+        str = 'Sleet';
         break;
       case WeatherCondition.heavyCloud:
         image = Image.asset('assets/image/rain-cloud.png');
-        text = Text('Heavy Cloud');
+        str = 'Heavy Cloud';
         break;
       case WeatherCondition.heavyRain:
         image = Image.asset('assets/image/moderate-rain.png');
-        text = Text('Heavy Rain');
+        str = 'Heavy Rain';
         break;
       case WeatherCondition.lightRain:
         image = Image.asset('assets/image/rain-cloud.png');
-        text = Text('Light Rain');
+        str = 'Light Rain';
         break;
       case WeatherCondition.showers:
         image = Image.asset('assets/image/heavy-rain.png');
-        text = Text('Showers');
+        str = 'Showers';
         break;
       case WeatherCondition.thunderstorm:
         image = Image.asset('assets/image/lightning.png');
-        text = Text('Thunderstorm');
+        str = 'Thunderstorm';
         break;
       case WeatherCondition.unknown:
         image = Image.asset('assets/image/sunset.png');
-        text = Text('Unknown');
+        str = 'Unknown';
         break;
     }
     return image;
@@ -115,7 +114,7 @@ class TemperatureWidget extends StatelessWidget {
                   Text(
                     'Max: ${_formattedTemperature(weather.maxTemp, settingsState.temperatureUnit)}',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       color: _themeState.textColor,
                     ),
                   ),
