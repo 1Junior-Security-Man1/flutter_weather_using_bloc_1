@@ -22,6 +22,8 @@ class LocationInfo {
   }
 
   Future<bool> getUserLocationAndGPS() async {
-    return await Location().requestService() ? await Location().requestPermission() : '';
+    return await Location().requestService()
+        ? await Location().requestPermission()
+        : '';
   }
 }

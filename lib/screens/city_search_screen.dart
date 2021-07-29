@@ -16,27 +16,42 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Enter a city'),),
       body: Form(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: TextFormField(
-                    controller: _cityTextController,
-                    decoration: InputDecoration(
-                        labelText: 'Enter a city',
-                        hintText: 'Example: Chicago'
-                    )
+        child: Column(
+          children: [
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: TextFormField(
+                        controller: _cityTextController,
+                        decoration: InputDecoration(
+                            labelText: 'Enter a city',
+                            hintText: 'Example: Chicago'
+                        )
+                    ),
+                  ),
                 ),
-              ),
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.pop(context, _cityTextController.text);
+                  },
+                ),
+              ],
             ),
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.pop(context, _cityTextController.text);
-              },
-            )
           ],
+        ),
+      ),
+      bottomSheet: Container(
+        height: 55,
+        width: 175,
+        //padding: const EdgeInsets.symmetric(horizontal: 70.0),
+        child: ElevatedButton(
+          onPressed: () {
+
+          },
+          child: const Text('Submit'),
         ),
       ),
     );

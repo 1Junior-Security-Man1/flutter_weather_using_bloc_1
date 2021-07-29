@@ -3,6 +3,7 @@
 //https://www.metaweather.com//api/location/2379574
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_weather_using_bloc_1/geolocator/geolocator.dart';
 import 'package:flutter_weather_using_bloc_1/models/weather.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +27,9 @@ class WeatherRepository {
 
   //TODO Update
   Future<dynamic> getResponseData({@required String query, String lat = "", String lon = ""}) async {
-    var url = 'http://api.openweathermap.org/data/2.5/forecast?q=$query&lat=$lat&lon=$lon&appid=$_apiKey&units=metric';
+    LocationInfo position = LocationInfo();
+    await position.getUserLocationData();
+    var url = 'http://api.openweathermap.org/data/2.5/forecast?q=$query&lat=${position.latitude}&lon=${position.longitude}&appid=$_apiKey&units=metric';
     http.Response response = await http.post(Uri.parse(url));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
