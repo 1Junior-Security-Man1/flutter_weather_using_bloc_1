@@ -12,8 +12,8 @@ import 'package:flutter_weather_using_bloc_1/screens/settings_screen.dart';
 import 'package:flutter_weather_using_bloc_1/screens/temperature_widget.dart';
 import 'package:flutter_weather_using_bloc_1/states/theme_state.dart';
 import 'package:flutter_weather_using_bloc_1/states/weather_state.dart';
-
 import '../utils.dart';
+import 'сonclusion_from_geolocation.dart';
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -113,9 +113,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               ),
                             ),
                             //show more here, put together inside a Widget
-                            TemperatureWidget(
-                              weather: weather,
-                            ),
+                            //ConclusionFromGeolocation(),
+                            TemperatureWidget(weather: weather),
                           ],
                         )
                       ],

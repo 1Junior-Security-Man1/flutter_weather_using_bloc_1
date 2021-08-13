@@ -1,5 +1,5 @@
-class Main {
-  Main({
+class WeatherGeolocation {
+  WeatherGeolocation({
     this.temp,
     this.tempMin,
     this.tempMax,
@@ -9,7 +9,7 @@ class Main {
   double tempMin;
   double tempMax;
 
-  factory Main.fromJson(Map<String, dynamic> json) => Main(
+  factory WeatherGeolocation.fromJson(Map<String, dynamic> json) => WeatherGeolocation(
     temp: json["temp"].toDouble(),
     tempMin: json["temp_min"].toDouble(),
     tempMax: json["temp_max"].toDouble(),

@@ -26,11 +26,13 @@ class WeatherRepository {
   }
 
   //TODO Update
-  Future<dynamic> getResponseData({@required String query, String lat = "", String lon = ""}) async {
+  Future<dynamic> getResponseData({@required String query, double lat, double lon}) async {
     LocationInfo position = LocationInfo();
     await position.getUserLocationData();
-    var url = 'http://api.openweathermap.org/data/2.5/forecast?q=$query&lat=${position.latitude}&lon=${position.longitude}&appid=$_apiKey&units=metric';
+    var url = 'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$_apiKey&units=metric';
     http.Response response = await http.post(Uri.parse(url));
+    print(position.latitude);
+    print(position.longitude);
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

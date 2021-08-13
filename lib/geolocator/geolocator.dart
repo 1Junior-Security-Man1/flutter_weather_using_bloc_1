@@ -6,7 +6,7 @@ class LocationInfo {
 
   Future<void> getUserLocationData() async {
     Location location = Location();
-    if (await Location().hasPermission() != null) {
+    if (await Location().hasPermission() == null) {
       if (await Location().requestPermission() != null) {
         return;
       }
