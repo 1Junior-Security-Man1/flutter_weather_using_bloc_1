@@ -18,7 +18,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState>{
       if(weatherCondition == WeatherCondition.clear ||
           weatherCondition == WeatherCondition.lightCloud) {
         newThemeState = ThemeState(
-            backgroundColor: Colors.yellow,
+            backgroundColor: Colors.yellow[600],
             textColor: Colors.white
         );
       } else if(weatherCondition == WeatherCondition.hail ||

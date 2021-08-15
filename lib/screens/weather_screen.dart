@@ -3,15 +3,21 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weather_using_bloc_1/bloc_geolocation_weather/event/weather_geolocation_event.dart';
+import 'package:flutter_weather_using_bloc_1/bloc_geolocation_weather/state/weather_geolocation_state.dart';
+import 'package:flutter_weather_using_bloc_1/bloc_geolocation_weather/weather_bloc_geolocation.dart';
 import 'package:flutter_weather_using_bloc_1/blocs/theme_bloc.dart';
-import 'package:flutter_weather_using_bloc_1/blocs/weather_bloc.dart';
 import 'package:flutter_weather_using_bloc_1/events/theme_event.dart';
-import 'package:flutter_weather_using_bloc_1/events/weather_evant.dart';
+import 'package:flutter_weather_using_bloc_1/models/weather_geolocation.dart';
 import 'package:flutter_weather_using_bloc_1/screens/city_search_screen.dart';
 import 'package:flutter_weather_using_bloc_1/screens/settings_screen.dart';
 import 'package:flutter_weather_using_bloc_1/screens/temperature_widget.dart';
 import 'package:flutter_weather_using_bloc_1/states/theme_state.dart';
-import 'package:flutter_weather_using_bloc_1/states/weather_state.dart';
+
+// import 'package:flutter_weather_using_bloc_1/states/weather_state.dart';
+// import 'package:flutter_weather_using_bloc_1/events/weather_evant.dart';
+// import 'package:flutter_weather_using_bloc_1/blocs/weather_bloc.dart';
+
 import '../utils.dart';
 import 'сonclusion_from_geolocation.dart';
 
@@ -22,6 +28,7 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   Completer<void> _completer;
+  CityName cityName = CityName();
 
   @override
   void initState() {
@@ -39,52 +46,46 @@ class _WeatherScreenState extends State<WeatherScreen> {
             icon: Icon(Icons.settings),
             onPressed: () {
               //Navigate to SettingsScreen
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SettingsScreen(),
-                  ));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen(),
+              ),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () async {
               //Navigate to CitySearchScreen
-              final typedCity = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CitySearchScreen()),
+              final typedCity = await Navigator.push(context, MaterialPageRoute(builder: (context) => CitySearchScreen(),
+                ),
               );
-              if (typedCity != null) {
-                BlocProvider.of<WeatherBloc>(context)
-                    .add(WeatherEventRequested(city: typedCity));
-              }
+              // if (typedCity != null) {
+              //  BlocProvider.of<WeatherBloc>(context).add(WeatherEventRequested(city: typedCity));
+              // }
             },
           ),
         ],
       ),
       body: Center(
-        child: BlocConsumer<WeatherBloc, WeatherState>(
-            listener: (context, weatherState) {
-          if (weatherState is WeatherStateSuccess) {
-            BlocProvider.of<ThemeBloc>(context).add(ThemeEventWeatherChanged(
-                weatherCondition: weatherState.weather.weatherCondition));
-            _completer?.complete();
-            _completer = Completer();
-          }
-        }, builder: (context, weatherState) {
-          if (weatherState is WeatherStateLoading) {
+        child: BlocConsumer<WeatherGeolocationBloc, WeatherGeolocationState>(
+            listener: (context, weatherGeolocationState) {
+              // if (weatherGeolocationState is WeatherStateSuccess) {
+              //   BlocProvider.of<ThemeBloc>(context).add(ThemeEventWeatherChanged(weatherCondition: weatherGeolocationState.weather.weatherCondition));
+              //   _completer?.complete();
+              //   _completer = Completer();
+              // }
+            }, builder: (context, weatherGeolocationState) {
+          if (weatherGeolocationState is WeatherStateLoading) {
             return Center(child: CircularProgressIndicator());
           }
-          if (weatherState is WeatherStateSuccess) {
-            final weather = weatherState.weather;
+          if (weatherGeolocationState is WeatherStateSuccess) {
+            final weatherGeolocation = weatherGeolocationState.weatherGeolocation;
             return BlocBuilder<ThemeBloc, ThemeState>(
               builder: (context, themeState) {
                 return RefreshIndicator(
                   onRefresh: () async {
                     final result = await Connectivity().checkConnectivity();
                     showConnectivitySnackBar(result);
-                    BlocProvider.of<WeatherBloc>(context)
-                        .add(WeatherEventRefresh(city: weather.location));
+                    //BlocProvider.of<WeatherGeolocationBloc>(context).add(WeatherEventRefresh(: weatherGeolocation.temp));
                     //return a "Completer object"
                     return _completer.future;
                   },
@@ -96,7 +97,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         Column(
                           children: <Widget>[
                             Text(
-                              weather.location,
+                              ///
+                              cityName.name,
                               style: TextStyle(
                                   fontSize: 43,
                                   fontWeight: FontWeight.bold,
@@ -105,16 +107,16 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 1),
                             ),
-                            Center(
-                              child: Text(
-                                'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
-                                style: TextStyle(
-                                    fontSize: 12, color: themeState.textColor),
-                              ),
-                            ),
+                            // Center(
+                            //   child: Text(
+                            //     'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
+                            //     style: TextStyle(
+                            //         fontSize: 12, color: themeState.textColor),
+                            //   ),
+                            // ),
                             //show more here, put together inside a Widget
                             //ConclusionFromGeolocation(),
-                            TemperatureWidget(weather: weather),
+                            ConclusionFromGeolocation(weatherGeolocation: weatherGeolocation),
                           ],
                         )
                       ],
@@ -124,7 +126,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               },
             );
           }
-          if (weatherState is WeatherStateFailure) {
+          if (weatherGeolocationState is WeatherStateFailure) {
             return Text(
               'Something went wrong',
               style: TextStyle(color: Colors.redAccent, fontSize: 16),

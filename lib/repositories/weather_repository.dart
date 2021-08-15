@@ -15,6 +15,7 @@ class WeatherRepository {
   final http.Client httpClient;
   //constructor
   WeatherRepository({@required this.httpClient}): assert(httpClient != null);
+
   Future<int> getLocationIdFromCity(String city) async {
     final response = await this.httpClient.get(Uri.parse(locationUrl(city)));
     if(response.statusCode == 200) {
@@ -26,13 +27,15 @@ class WeatherRepository {
   }
 
   //TODO Update
-  Future<dynamic> getResponseData({@required String query, double lat, double lon}) async {
-    LocationInfo position = LocationInfo();
-    await position.getUserLocationData();
-    var url = 'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$_apiKey&units=metric';
+  Future<dynamic> getResponseData(double latitude, double longitude) async {
+    // LocationInfo position = LocationInfo();
+    // await position.getUserLocationData();
+    var url = 'https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=$_apiKey&units=metric';
     http.Response response = await http.post(Uri.parse(url));
-    print(position.latitude);
-    print(position.longitude);
+    // print('Api ${position.latitude}');
+    // print('Api ${position.longitude}');
+    print('Api ${latitude}');
+    print('Api ${longitude}');
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

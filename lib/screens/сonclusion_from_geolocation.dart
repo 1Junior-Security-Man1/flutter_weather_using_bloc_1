@@ -9,10 +9,10 @@ import 'package:flutter_weather_using_bloc_1/states/settings_state.dart';
 import 'package:flutter_weather_using_bloc_1/states/theme_state.dart';
 
 class ConclusionFromGeolocation extends StatelessWidget {
-  final WeatherGeolocation weather;
+  final WeatherGeolocation weatherGeolocation;
   //constructor
-  ConclusionFromGeolocation({Key key, @required this.weather})
-      : assert(weather != null),
+  ConclusionFromGeolocation({Key key, @required this.weatherGeolocation})
+      : assert(weatherGeolocation != null),
         super(key: key);
   //Convert celcius to fahrenheit
   int _toFahrenheit(double celsius) => ((celsius * 9 / 5) + 32).round();
@@ -90,7 +90,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: 10, left: 15),
                 child: Text(
-                  '${_formattedTemperature(weather.temp, settingsState.temperatureUnit)}',
+                  '${_formattedTemperature(weatherGeolocation.temp, settingsState.temperatureUnit)}',
                   style: TextStyle(
                     fontSize: 40,
                     color: _themeState.textColor,
@@ -103,7 +103,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 3),
                     child: Text(
-                      'Min: ${_formattedTemperature(weather.tempMin, settingsState.temperatureUnit)}',
+                      'Min: ${_formattedTemperature(weatherGeolocation.tempMin, settingsState.temperatureUnit)}',
                       style: TextStyle(
                         fontSize: 12,
                         color: _themeState.textColor,
@@ -111,7 +111,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Max: ${_formattedTemperature(weather.tempMax, settingsState.temperatureUnit)}',
+                    'Max: ${_formattedTemperature(weatherGeolocation.tempMax, settingsState.temperatureUnit)}',
                     style: TextStyle(
                       fontSize: 12,
                       color: _themeState.textColor,

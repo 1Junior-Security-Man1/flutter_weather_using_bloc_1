@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class WeatherGeolocation {
   WeatherGeolocation({
     this.temp,
@@ -35,5 +37,21 @@ class Weather {
 
   Map<String, dynamic> toJson() => {
     "icon": icon,
+  };
+}
+
+class CityName {
+  CityName({
+    this.name,
+  });
+
+  String name;
+
+  factory CityName.fromJson(Map<String, dynamic> json) => CityName(
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
   };
 }

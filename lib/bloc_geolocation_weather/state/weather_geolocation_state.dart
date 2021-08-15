@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_weather_using_bloc_1/models/weather.dart';
+import 'package:flutter_weather_using_bloc_1/models/weather_geolocation.dart';
 
 abstract class WeatherGeolocationState extends Equatable {
   const WeatherGeolocationState();
@@ -10,9 +10,9 @@ abstract class WeatherGeolocationState extends Equatable {
 class WeatherStateInitial extends WeatherGeolocationState {}
 class WeatherStateLoading extends WeatherGeolocationState {}
 class WeatherStateSuccess extends WeatherGeolocationState {
-  final Weather weather;
-  const WeatherStateSuccess({@required this.weather}) : assert(weather != null);
+  final WeatherGeolocation weatherGeolocation;
+  const WeatherStateSuccess({@required this.weatherGeolocation}) : assert(weatherGeolocation != null);
   @override
-  List<Object> get props => [weather];
+  List<Object> get props => [weatherGeolocation];
 }
 class WeatherStateFailure extends WeatherGeolocationState {}
