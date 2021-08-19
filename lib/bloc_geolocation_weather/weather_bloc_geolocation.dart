@@ -8,22 +8,22 @@ import 'package:flutter_weather_using_bloc_1/repositories/weather_repository.dar
 
 class WeatherGeolocationBloc extends Bloc<WeatherGeolocationEvent, WeatherGeolocationState> {
   final WeatherRepository weatherRepository;
-  final LocationInfo locationInfo;
 
-  WeatherGeolocationBloc({@required this.weatherRepository, @required this.locationInfo}) : assert(weatherRepository != null), super(WeatherStateInitial());
+  WeatherGeolocationBloc({@required this.weatherRepository}) : assert(weatherRepository != null), super(WeatherStateInitial());
   @override
   Stream<WeatherGeolocationState> mapEventToState(WeatherGeolocationEvent weatherGeolocationEvent) async*{
     if(weatherGeolocationEvent is WeatherEventRequested) {
       yield WeatherStateLoading();
       try {
-        final WeatherGeolocation weatherGeolocation = await weatherRepository.getResponseData(weatherGeolocationEvent.latitude, weatherGeolocationEvent.longitude);
-        yield WeatherStateSuccess(weatherGeolocation: weatherGeolocation);
+        final Main weatherGeolocation = await weatherRepository.getResponseData(weatherGeolocationEvent.latitude, weatherGeolocationEvent.longitude);
+        yield await WeatherStateSuccess(weatherGeolocation: weatherGeolocation);
+        print(weatherGeolocation);
       }catch(exception) {
         yield WeatherStateFailure();
       }
     } else if(weatherGeolocationEvent is WeatherEventRefresh) {
       try {
-        final WeatherGeolocation weatherGeolocation = await weatherRepository.getResponseData(locationInfo.latitude, locationInfo.longitude);
+        final Main weatherGeolocation = await weatherRepository.getResponseData(weatherGeolocationEvent.latitude, weatherGeolocationEvent.longitude);
         yield WeatherStateSuccess(weatherGeolocation: weatherGeolocation);
       }catch(exception) {
         yield WeatherStateFailure();

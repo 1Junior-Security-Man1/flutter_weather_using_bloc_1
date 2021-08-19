@@ -28,7 +28,7 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   Completer<void> _completer;
-  CityName cityName = CityName();
+  ///CityName cityName = CityName();
 
   @override
   void initState() {
@@ -96,14 +96,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Text(
-                              ///
-                              cityName.name,
-                              style: TextStyle(
-                                  fontSize: 43,
-                                  fontWeight: FontWeight.bold,
-                                  color: themeState.textColor),
-                            ),
+                            // Text(
+                            //   ///
+                            //   cityName.name,
+                            //   style: TextStyle(
+                            //       fontSize: 43,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: themeState.textColor),
+                            // ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 1),
                             ),

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_weather_using_bloc_1/geolocator/geolocator.dart';
 import 'package:flutter_weather_using_bloc_1/models/weather.dart';
+import 'package:flutter_weather_using_bloc_1/models/weather_geolocation.dart';
 import 'package:http/http.dart' as http;
 
 const baseUrl = 'https://www.metaweather.com';
@@ -27,19 +28,21 @@ class WeatherRepository {
   }
 
   //TODO Update
-  Future<dynamic> getResponseData(double latitude, double longitude) async {
-    // LocationInfo position = LocationInfo();
-    // await position.getUserLocationData();
+  Future<Main> getResponseData(double latitude, double longitude) async {
     var url = 'https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=$_apiKey&units=metric';
     http.Response response = await http.post(Uri.parse(url));
-    // print('Api ${position.latitude}');
-    // print('Api ${position.longitude}');
-    print('Api ${latitude}');
-    print('Api ${longitude}');
+    print('Geo ${latitude}');
+    print('Geo ${longitude}');
+    print('Api ${response.body}');
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+     return Main.fromJson(json.decode(response.body));
+      //return jsonDecode(response.body);
+      //final weatherJson = jsonDecode(response.body);
+      //return Main.fromJson(weatherJson);
     } else {
-      return response.statusCode;
+      throw Exception('Failed to load weather');
+      // final weatherJson = jsonDecode(response.body);
+      // return Main.fromJson(weatherJson);
     }
   }
 
@@ -54,6 +57,7 @@ class WeatherRepository {
     return Weather.fromJson(weatherJson);
   }
   Future<Weather> getWeatherFromCity(String city) async {
+    //print();
     final int locationId = await getLocationIdFromCity(city);
     return fetchWeather(locationId);
   }

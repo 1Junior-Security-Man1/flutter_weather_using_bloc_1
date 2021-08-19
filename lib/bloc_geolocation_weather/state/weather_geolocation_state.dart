@@ -10,7 +10,7 @@ abstract class WeatherGeolocationState extends Equatable {
 class WeatherStateInitial extends WeatherGeolocationState {}
 class WeatherStateLoading extends WeatherGeolocationState {}
 class WeatherStateSuccess extends WeatherGeolocationState {
-  final WeatherGeolocation weatherGeolocation;
+  final Main weatherGeolocation;
   const WeatherStateSuccess({@required this.weatherGeolocation}) : assert(weatherGeolocation != null);
   @override
   List<Object> get props => [weatherGeolocation];

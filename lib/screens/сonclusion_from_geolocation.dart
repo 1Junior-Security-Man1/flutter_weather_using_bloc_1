@@ -9,70 +9,70 @@ import 'package:flutter_weather_using_bloc_1/states/settings_state.dart';
 import 'package:flutter_weather_using_bloc_1/states/theme_state.dart';
 
 class ConclusionFromGeolocation extends StatelessWidget {
-  final WeatherGeolocation weatherGeolocation;
+  final Main weatherGeolocation;
   //constructor
   ConclusionFromGeolocation({Key key, @required this.weatherGeolocation})
       : assert(weatherGeolocation != null),
         super(key: key);
-  //Convert celcius to fahrenheit
-  int _toFahrenheit(double celsius) => ((celsius * 9 / 5) + 32).round();
+  // //Convert celcius to fahrenheit
+  // int _toFahrenheit(double celsius) => ((celsius * 9 / 5) + 32).round();
+  //
+  // String _formattedTemperature(double temp, TemperatureUnit temperatureUnit) =>
+  //     temperatureUnit == TemperatureUnit.fahrenheit
+  //         ? '${_toFahrenheit(temp)}°F'
+  //         : '${temp.round()}°C';
 
-  String _formattedTemperature(double temp, TemperatureUnit temperatureUnit) =>
-      temperatureUnit == TemperatureUnit.fahrenheit
-          ? '${_toFahrenheit(temp)}°F'
-          : '${temp.round()}°C';
-
-  Image _mapWeatherConditionToIcon({WeatherCondition weatherCondition}) {
-    Image image;
-    String str;
-    switch (weatherCondition) {
-      case WeatherCondition.clear:
-        image = Image.asset('assets/image/summer.png');
-        str = 'Clear';
-        break;
-      case WeatherCondition.lightCloud:
-        image = Image.asset('assets/image/partly-cloudy-day.png');
-        str = 'Light Cloud';
-        break;
-      case WeatherCondition.hail:
-        image = Image.asset('assets/image/hail.png');
-        str = 'Hail';
-        break;
-      case WeatherCondition.snow:
-        image = Image.asset('assets/image/snow.png');
-        str = 'Snow';
-        break;
-      case WeatherCondition.sleet:
-        image = Image.asset('assets/image/sleet.png');
-        str = 'Sleet';
-        break;
-      case WeatherCondition.heavyCloud:
-        image = Image.asset('assets/image/rain-cloud.png');
-        str = 'Heavy Cloud';
-        break;
-      case WeatherCondition.heavyRain:
-        image = Image.asset('assets/image/moderate-rain.png');
-        str = 'Heavy Rain';
-        break;
-      case WeatherCondition.lightRain:
-        image = Image.asset('assets/image/rain-cloud.png');
-        str = 'Light Rain';
-        break;
-      case WeatherCondition.showers:
-        image = Image.asset('assets/image/heavy-rain.png');
-        str = 'Showers';
-        break;
-      case WeatherCondition.thunderstorm:
-        image = Image.asset('assets/image/lightning.png');
-        str = 'Thunderstorm';
-        break;
-      case WeatherCondition.unknown:
-        image = Image.asset('assets/image/sunset.png');
-        str = 'Unknown';
-        break;
-    }
-    return image;
-  }
+  // Image _mapWeatherConditionToIcon({WeatherCondition weatherCondition}) {
+  //   Image image;
+  //   String str;
+  //   switch (weatherCondition) {
+  //     case WeatherCondition.clear:
+  //       image = Image.asset('assets/image/summer.png');
+  //       str = 'Clear';
+  //       break;
+  //     case WeatherCondition.lightCloud:
+  //       image = Image.asset('assets/image/partly-cloudy-day.png');
+  //       str = 'Light Cloud';
+  //       break;
+  //     case WeatherCondition.hail:
+  //       image = Image.asset('assets/image/hail.png');
+  //       str = 'Hail';
+  //       break;
+  //     case WeatherCondition.snow:
+  //       image = Image.asset('assets/image/snow.png');
+  //       str = 'Snow';
+  //       break;
+  //     case WeatherCondition.sleet:
+  //       image = Image.asset('assets/image/sleet.png');
+  //       str = 'Sleet';
+  //       break;
+  //     case WeatherCondition.heavyCloud:
+  //       image = Image.asset('assets/image/rain-cloud.png');
+  //       str = 'Heavy Cloud';
+  //       break;
+  //     case WeatherCondition.heavyRain:
+  //       image = Image.asset('assets/image/moderate-rain.png');
+  //       str = 'Heavy Rain';
+  //       break;
+  //     case WeatherCondition.lightRain:
+  //       image = Image.asset('assets/image/rain-cloud.png');
+  //       str = 'Light Rain';
+  //       break;
+  //     case WeatherCondition.showers:
+  //       image = Image.asset('assets/image/heavy-rain.png');
+  //       str = 'Showers';
+  //       break;
+  //     case WeatherCondition.thunderstorm:
+  //       image = Image.asset('assets/image/lightning.png');
+  //       str = 'Thunderstorm';
+  //       break;
+  //     case WeatherCondition.unknown:
+  //       image = Image.asset('assets/image/sunset.png');
+  //       str = 'Unknown';
+  //       break;
+  //   }
+  //   return image;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: 10, left: 15),
                 child: Text(
-                  '${_formattedTemperature(weatherGeolocation.temp, settingsState.temperatureUnit)}',
+                  '${weatherGeolocation.temp}',
                   style: TextStyle(
                     fontSize: 40,
                     color: _themeState.textColor,
@@ -103,7 +103,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 3),
                     child: Text(
-                      'Min: ${_formattedTemperature(weatherGeolocation.tempMin, settingsState.temperatureUnit)}',
+                      'Min: ${weatherGeolocation.tempMin}',
                       style: TextStyle(
                         fontSize: 12,
                         color: _themeState.textColor,
@@ -111,7 +111,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Max: ${_formattedTemperature(weatherGeolocation.tempMax, settingsState.temperatureUnit)}',
+                    'Max: ${weatherGeolocation.tempMax}',
                     style: TextStyle(
                       fontSize: 12,
                       color: _themeState.textColor,

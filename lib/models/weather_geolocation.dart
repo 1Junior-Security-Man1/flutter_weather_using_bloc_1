@@ -1,57 +1,62 @@
-import 'dart:convert';
+import 'package:equatable/equatable.dart';
 
-class WeatherGeolocation {
-  WeatherGeolocation({
-    this.temp,
-    this.tempMin,
-    this.tempMax,
-  });
+// ignore: must_be_immutable
+class Main extends Equatable{
 
   double temp;
   double tempMin;
   double tempMax;
 
-  factory WeatherGeolocation.fromJson(Map<String, dynamic> json) => WeatherGeolocation(
-    temp: json["temp"].toDouble(),
-    tempMin: json["temp_min"].toDouble(),
-    tempMax: json["temp_max"].toDouble(),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "temp": temp,
-    "temp_min": tempMin,
-    "temp_max": tempMax,
-  };
-}
-
-class Weather {
-  Weather({
-    this.icon,
+  Main({
+    this.temp,
+    this.tempMin,
+    this.tempMax,
   });
 
-  String icon;
-
-  factory Weather.fromJson(Map<String, dynamic> json) => Weather(
-    icon: json["icon"],
+  factory Main.fromJson(Map<String, dynamic> json) => Main(
+    temp: json["temp"] as double,
+    tempMin: json["temp_min"] as double,
+    tempMax: json["temp_max"] as double,
   );
 
-  Map<String, dynamic> toJson() => {
-    "icon": icon,
-  };
+  @override
+  List<Object> get props => [temp, tempMin, tempMax];
+
+  // Map<String, dynamic> toJson() => {
+  //   "temp": temp,
+  //   "temp_min": tempMin,
+  //   "temp_max": tempMax,
+  // };
 }
 
-class CityName {
-  CityName({
-    this.name,
-  });
+// class Weather {
+//   Weather({
+//     this.icon,
+//   });
+//
+//   String icon;
+//
+//   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
+//     icon: json["icon"],
+//   );
+//
+//   Map<String, dynamic> toJson() => {
+//     "icon": icon,
+//   };
+// }
 
-  String name;
-
-  factory CityName.fromJson(Map<String, dynamic> json) => CityName(
-    name: json["name"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-  };
-}
+// class CityName {
+//   CityName({
+//     this.name,
+//   });
+//
+//   String name;
+//
+//   factory CityName.fromJson(Map<String, dynamic> json) => CityName(
+//     name: json["name"],
+//   );
+//
+//   Map<String, dynamic> toJson() => {
+//     "name": name,
+//   };
+// }
