@@ -90,7 +90,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: 10, left: 15),
                 child: Text(
-                  '${weatherGeolocation.temp}',
+                  '${weatherGeolocation.main.temp.toInt()}',
                   style: TextStyle(
                     fontSize: 40,
                     color: _themeState.textColor,
@@ -103,7 +103,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 3),
                     child: Text(
-                      'Min: ${weatherGeolocation.tempMin}',
+                      'Min: ${weatherGeolocation.main.tempMin.toInt()}',
                       style: TextStyle(
                         fontSize: 12,
                         color: _themeState.textColor,
@@ -111,7 +111,7 @@ class ConclusionFromGeolocation extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Max: ${weatherGeolocation.tempMax}',
+                    'Max: ${weatherGeolocation.main.tempMax.toInt()}',
                     style: TextStyle(
                       fontSize: 12,
                       color: _themeState.textColor,

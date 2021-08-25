@@ -30,7 +30,7 @@ class WeatherRepository {
   //TODO Update
   Future<Main> getResponseData(double latitude, double longitude) async {
     var url = 'https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=$_apiKey&units=metric';
-    http.Response response = await http.post(Uri.parse(url));
+    http.Response response = await http.get(Uri.parse(url));
     print('Geo ${latitude}');
     print('Geo ${longitude}');
     print('Api ${response.body}');

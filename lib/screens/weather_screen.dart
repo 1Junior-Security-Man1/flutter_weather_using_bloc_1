@@ -28,7 +28,7 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   Completer<void> _completer;
-  ///CityName cityName = CityName();
+  //CityName cityName = CityName();
 
   @override
   void initState() {

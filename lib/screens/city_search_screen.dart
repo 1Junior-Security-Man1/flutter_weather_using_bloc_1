@@ -63,7 +63,7 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
                     //Navigate to CitySearchScreen
                     await position.getUserLocationData();
                     if (position != null) {
-                      BlocProvider.of<WeatherGeolocationBloc>(context).add(WeatherEventRequested(latitude: position.latitude, longitude: position.longitude));
+                     await BlocProvider.of<WeatherGeolocationBloc>(context).add(WeatherEventRequested(latitude: position.latitude, longitude: position.longitude));
                     print(position.longitude);
                     print(position.latitude);
                     }
