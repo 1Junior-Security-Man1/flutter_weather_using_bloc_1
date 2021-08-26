@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_using_bloc_1/blocs/settings_bloc.dart';
 import 'package:flutter_weather_using_bloc_1/blocs/theme_bloc.dart';
-import 'package:flutter_weather_using_bloc_1/models/weather.dart';
 import 'package:flutter_weather_using_bloc_1/models/weather_geolocation.dart';
 import 'package:flutter_weather_using_bloc_1/states/settings_state.dart';
 import 'package:flutter_weather_using_bloc_1/states/theme_state.dart';
@@ -21,54 +20,38 @@ class ConclusionFromGeolocation extends StatelessWidget {
   //     temperatureUnit == TemperatureUnit.fahrenheit
   //         ? '${_toFahrenheit(temp)}°F'
   //         : '${temp.round()}°C';
-
-  // Image _mapWeatherConditionToIcon({WeatherCondition weatherCondition}) {
+  // Image _mapWeatherIconToIcon({WeatherIcons weatherIcons}) {
   //   Image image;
-  //   String str;
-  //   switch (weatherCondition) {
-  //     case WeatherCondition.clear:
-  //       image = Image.asset('assets/image/summer.png');
-  //       str = 'Clear';
+  //   switch (weatherIcons) {
+  //     case WeatherIcons.clearSkyD:
+  //       image = Image.asset('assets/weatherImage/01d@2x.png');
   //       break;
-  //     case WeatherCondition.lightCloud:
-  //       image = Image.asset('assets/image/partly-cloudy-day.png');
-  //       str = 'Light Cloud';
+  //     case WeatherIcons.clearSkyN:
+  //       image = Image.asset('assets/weatherImage/01n@2x.png');
   //       break;
-  //     case WeatherCondition.hail:
-  //       image = Image.asset('assets/image/hail.png');
-  //       str = 'Hail';
+  //     case WeatherIcons.fewCloudsD:
+  //       image = Image.asset('assets/weatherImage/02d@2x.png');
   //       break;
-  //     case WeatherCondition.snow:
-  //       image = Image.asset('assets/image/snow.png');
-  //       str = 'Snow';
+  //     case WeatherIcons.fewCloudsN:
+  //       image = Image.asset('assets/weatherImage/02n@2x.png');
   //       break;
-  //     case WeatherCondition.sleet:
-  //       image = Image.asset('assets/image/sleet.png');
-  //       str = 'Sleet';
+  //     case WeatherIcons.scatteredClouds:
+  //       image = Image.asset('assets/weatherImage/03d@2x.png');
   //       break;
-  //     case WeatherCondition.heavyCloud:
-  //       image = Image.asset('assets/image/rain-cloud.png');
-  //       str = 'Heavy Cloud';
+  //     case WeatherIcons.brokenClouds:
+  //       image = Image.asset('assets/weatherImage/04d@2x.png');
   //       break;
-  //     case WeatherCondition.heavyRain:
-  //       image = Image.asset('assets/image/moderate-rain.png');
-  //       str = 'Heavy Rain';
+  //     case WeatherIcons.showerRain:
+  //       image = Image.asset('assets/weatherImage/09d@2x.png');
   //       break;
-  //     case WeatherCondition.lightRain:
-  //       image = Image.asset('assets/image/rain-cloud.png');
-  //       str = 'Light Rain';
+  //     case WeatherIcons.rainD:
+  //       image = Image.asset('assets/weatherImage/10d@2x.png');
   //       break;
-  //     case WeatherCondition.showers:
-  //       image = Image.asset('assets/image/heavy-rain.png');
-  //       str = 'Showers';
+  //     case WeatherIcons.rainN:
+  //       image = Image.asset('assets/weatherImage/10n@2x.png');
   //       break;
-  //     case WeatherCondition.thunderstorm:
-  //       image = Image.asset('assets/image/lightning.png');
-  //       str = 'Thunderstorm';
-  //       break;
-  //     case WeatherCondition.unknown:
-  //       image = Image.asset('assets/image/sunset.png');
-  //       str = 'Unknown';
+  //     case WeatherIcons.mist:
+  //       image = Image.asset('assets/weatherImage/04d@2x.png');
   //       break;
   //   }
   //   return image;
@@ -81,51 +64,64 @@ class ConclusionFromGeolocation extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, settingsState) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(width: 45),
-              //Add an icon here
-              //_mapWeatherConditionToIcon(weatherCondition: weather.weatherCondition),
-              Padding(
-                padding: EdgeInsets.only(right: 10, left: 15),
-                child: Text(
-                  '${weatherGeolocation.main.temp.toInt()}',
-                  style: TextStyle(
-                    fontSize: 40,
-                    color: _themeState.textColor,
-                  ),
-                ),
+          return Column(
+            children: [
+              Text(
+                weatherGeolocation.name,
+                style: TextStyle(
+                    fontSize: 43,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              SizedBox(height: 35),
+              //_mapWeatherIconToIcon(weatherIcons: weatherGeolocation.weatherIcon.weatherIcons),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  SizedBox(width: 45),
+                  //Add an icon here
+                  //_mapWeatherConditionToIcon(weatherCondition: weather.weatherCondition),
                   Padding(
-                    padding: EdgeInsets.only(right: 3),
+                    padding: EdgeInsets.only(right: 10, left: 15),
                     child: Text(
-                      'Min: ${weatherGeolocation.main.tempMin.toInt()}',
+                      '${weatherGeolocation.main.temp.toInt()}',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 40,
                         color: _themeState.textColor,
                       ),
                     ),
                   ),
-                  Text(
-                    'Max: ${weatherGeolocation.main.tempMax.toInt()}',
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(right: 3),
+                        child: Text(
+                          'Min: ${weatherGeolocation.main.tempMin.toInt()}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: _themeState.textColor,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Max: ${weatherGeolocation.main.tempMax.toInt()}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: _themeState.textColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 40),
+                  //TODO
+                  Text('',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 13,
                       color: _themeState.textColor,
                     ),
                   ),
                 ],
-              ),
-              SizedBox(width: 40),
-              //TODO
-              Text('',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: _themeState.textColor,
-                ),
               ),
             ],
           );

@@ -85,8 +85,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   onRefresh: () async {
                     final result = await Connectivity().checkConnectivity();
                     showConnectivitySnackBar(result);
-                    //BlocProvider.of<WeatherGeolocationBloc>(context).add(WeatherEventRefresh(: weatherGeolocation.temp));
+                    BlocProvider.of<WeatherGeolocationBloc>(context).add(WeatherEventRefresh());
                     //return a "Completer object"
+                    ///
                     return _completer.future;
                   },
                   child: Container(
