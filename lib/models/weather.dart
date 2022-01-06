@@ -58,8 +58,7 @@ class Weather extends Equatable {
 
   @override
   List<Object> get props =>
-      [
-        weatherCondition,
+      [weatherCondition,
         formattedCondition,
         minTemp,
         temp,
@@ -67,8 +66,8 @@ class Weather extends Equatable {
         locationId,
         created,
         lastUpdated,
-        location,
-      ];
+        location];
+
   factory Weather.fromJson(dynamic jsonObject) {
     final consolidatedWeather = jsonObject['consolidated_weather'][0];
     return Weather(

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 /// coord : {"lon":-122.084,"lat":37.422}
 /// weather : [{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04n"}]
@@ -15,44 +16,41 @@ import 'package:equatable/equatable.dart';
 /// cod : 200
 
 class Main {
+  Coord _coord;
   MainObject _main;
   String _name;
-  //WeatherIcon _weatherIcon;
+  WeatherIcon _weatherIcon;
 
-  //List<WeatherIcon> _weather;
+  Coord get coord => _coord;
+
+  WeatherIcon get weatherIcon => _weatherIcon;
 
   MainObject get main => _main;
+
   String get name => _name;
-  //WeatherIcon get weatherIcon => _weatherIcon;
 
   Main({
+    Coord coord,
     MainObject main,
     String name,
-    //WeatherIcon weatherIcon,
-  }){
+    WeatherIcon weatherIcon,
+  }) {
+    _coord = coord;
     _main = main;
     _name = name;
-    //_weatherIcon = weatherIcon;
+    _weatherIcon = weatherIcon;
   }
 
-  Main.fromJson(dynamic json) {
-    _main = json['main'] != null ? MainObject.fromJson(json['main']) : null;
-    _name = json['name'];
-    // if (json['weather'] != null) {
-    //   _weatherIcon = [] as WeatherIcon;
-    //   // json['weather'].forEach((v) {
-    //   //   _weatherIcon.add(WeatherIcon.fromJson(v));
-    //   // });
-    // }
+  ///Работает!
+  factory Main.fromJson(Map<String, dynamic> json) {
+    return Main(
+      coord: json['coord'] != null ? Coord.fromJson(json['coord']) : null,
+      main: json['main'] != null ? MainObject.fromJson(json['main']) : null,
+      name: json['name'],
+      weatherIcon: WeatherIcon.fromJson(json['weather'][0]),
+    );
   }
 }
-
-/// temp : 14.36
-/// feels_like : 14.1
-/// temp_min : 12.2
-/// temp_max : 15.62
-/// pressure : 1014
-/// humidity : 86
 
 class MainObject {
   double _temp;
@@ -60,14 +58,16 @@ class MainObject {
   double _tempMax;
 
   double get temp => _temp;
+
   double get tempMin => _tempMin;
+
   double get tempMax => _tempMax;
 
   MainObject({
     double temp,
     double tempMin,
     double tempMax,
-  }){
+  }) {
     _temp = temp;
     _tempMin = tempMin;
     _tempMax = tempMax;
@@ -82,65 +82,85 @@ class MainObject {
 
 /// icon : "04n"
 
-// enum WeatherIcons {
-//   clearSkyD,
-//   clearSkyN,
-//   fewCloudsD,
-//   fewCloudsN,
-//   scatteredClouds,
-//   brokenClouds,
-//   showerRain,
-//   rainD,
-//   rainN,
-//   thunderstorm,
-//   snow,
-//   mist,
-// }
-//
-// class WeatherIcon extends Equatable {
-//   WeatherIcons weatherIcons;
-//   //String _icon;
-//
-//   //String get icon => _icon;
-//   //String get weatherIcons;
-//
-//   WeatherIcon({
-//     String weatherIcons,
-//     //String icon
-//   }){
-//     weatherIcons = weatherIcons;
-//     //_icon = icon;
-//   }
-//
-//   @override
-//   List<Object> get props => [weatherIcons];
-//
-//   WeatherIcon.fromJson(dynamic json) {
-//     weatherIcons: _mapStringToWeatherCondition(json['icon']) ?? '';
-//     //_icon = json['icon'];
-//   }
-//
-//   static WeatherIcons _mapStringToWeatherCondition(String inputString) {
-//     Map<String, WeatherIcons> map = {
-//       '01d': WeatherIcons.clearSkyD,
-//       '01n': WeatherIcons.clearSkyN,
-//       '02d': WeatherIcons.fewCloudsD,
-//       '02n': WeatherIcons.fewCloudsN,
-//       '03d': WeatherIcons.scatteredClouds,
-//       '03n': WeatherIcons.scatteredClouds,
-//       '04d': WeatherIcons.brokenClouds,
-//       '04n': WeatherIcons.brokenClouds,
-//       '09d': WeatherIcons.showerRain,
-//       '09n': WeatherIcons.showerRain,
-//       '10d': WeatherIcons.rainD,
-//       '10n': WeatherIcons.rainN,
-//       '11d': WeatherIcons.thunderstorm,
-//       '11n': WeatherIcons.thunderstorm,
-//       '13d': WeatherIcons.snow,
-//       '13n': WeatherIcons.snow,
-//       '50d': WeatherIcons.mist,
-//       '50n': WeatherIcons.thunderstorm,
-//     };
-//     return map[inputString] ?? 'Dont know';
-//   }
-//}
+enum WeatherIcons {
+  clearSkyD,
+  clearSkyN,
+  fewCloudsD,
+  fewCloudsN,
+  scatteredClouds,
+  brokenClouds,
+  showerRain,
+  rainD,
+  rainN,
+  thunderstorm,
+  snow,
+  mist,
+}
+
+class WeatherIcon {
+  WeatherIcons _weatherIcons;
+
+  WeatherIcons get weatherIcons => _weatherIcons;
+
+  WeatherIcon({
+    WeatherIcons weatherIcons,
+  }) {
+    _weatherIcons = weatherIcons;
+  }
+
+  factory WeatherIcon.fromJson(Map<String, dynamic> json) {
+    return WeatherIcon(
+      weatherIcons: _mapStringToWeatherCondition(json['icon']) ?? '',
+    );
+  }
+
+  static WeatherIcons _mapStringToWeatherCondition(String inputString) {
+    Map<String, WeatherIcons> map = {
+      '01d': WeatherIcons.clearSkyD,
+      '01n': WeatherIcons.clearSkyN,
+      '02d': WeatherIcons.fewCloudsD,
+      '02n': WeatherIcons.fewCloudsN,
+      '03d': WeatherIcons.scatteredClouds,
+      '03n': WeatherIcons.scatteredClouds,
+      '04d': WeatherIcons.brokenClouds,
+      '04n': WeatherIcons.brokenClouds,
+      '09d': WeatherIcons.showerRain,
+      '09n': WeatherIcons.showerRain,
+      '10d': WeatherIcons.rainD,
+      '10n': WeatherIcons.rainN,
+      '11d': WeatherIcons.thunderstorm,
+      '11n': WeatherIcons.thunderstorm,
+      '13d': WeatherIcons.snow,
+      '13n': WeatherIcons.snow,
+      '50d': WeatherIcons.mist,
+      '50n': WeatherIcons.thunderstorm,
+    };
+    return map[inputString] ?? 'Dont know';
+  }
+}
+
+class Coord {
+  double _lon;
+  double _lat;
+
+  double get lon => _lon;
+
+  double get lat => _lat;
+
+  Coord({double lon, double lat}) {
+    _lon = lon;
+    _lat = lat;
+  }
+
+  Coord.fromJson(dynamic json) {
+    _lon = json['lon'];
+    _lat = json['lat'];
+  }
+
+  Map<String, dynamic> toJson() {
+    var map = <String, dynamic>{};
+    map['lon'] = _lon;
+    map['lat'] = _lat;
+    return map;
+  }
+}

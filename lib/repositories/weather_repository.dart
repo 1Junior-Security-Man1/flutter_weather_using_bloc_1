@@ -41,8 +41,6 @@ class WeatherRepository {
       //return Main.fromJson(weatherJson);
     } else {
       throw Exception('Failed to load weather');
-      // final weatherJson = jsonDecode(response.body);
-      // return Main.fromJson(weatherJson);
     }
   }
 
@@ -50,15 +48,17 @@ class WeatherRepository {
   Future<Weather> fetchWeather(int locationId) async {
     final response = await this.httpClient.get(Uri.parse(weatherUrl(locationId)));
     if(response.statusCode != 200) {
-      //print(response.body + 'api');
       throw Exception('Error getting weather from locationId: ${locationId}');
     }
     final weatherJson = jsonDecode(response.body);
     return Weather.fromJson(weatherJson);
   }
   Future<Weather> getWeatherFromCity(String city) async {
-    //print();
     final int locationId = await getLocationIdFromCity(city);
     return fetchWeather(locationId);
   }
+  //
+  // Future<Coord> getDataRefresh(double latitude, double longitude) async{
+  //   final double
+  // }
 }

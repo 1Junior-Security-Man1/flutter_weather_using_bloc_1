@@ -71,7 +71,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               // if (weatherGeolocationState is WeatherStateSuccess) {
               //   BlocProvider.of<ThemeBloc>(context).add(ThemeEventWeatherChanged(weatherCondition: weatherGeolocationState.weather.weatherCondition));
               //   _completer?.complete();
-              //   _completer = Completer();
+              // _completer = Completer();
               // }
             }, builder: (context, weatherGeolocationState) {
           if (weatherGeolocationState is WeatherStateLoading) {
@@ -85,9 +85,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   onRefresh: () async {
                     final result = await Connectivity().checkConnectivity();
                     showConnectivitySnackBar(result);
-                    BlocProvider.of<WeatherGeolocationBloc>(context).add(WeatherEventRefresh());
+                    BlocProvider.of<WeatherGeolocationBloc>(context).add(WeatherEventRefresh(latitude: weatherGeolocation.coord.lat, longitude: weatherGeolocation.coord.lon));
+                    // _completer?.complete();
+                    // _completer = Completer();
                     //return a "Completer object"
                     ///
+                    _completer?.complete();
+                    //_completer = Completer();
                     return _completer.future;
                   },
                   child: Container(
@@ -134,9 +138,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             );
           }
           return Center(
-            child: Text(
-              'select a location first !',
-              style: TextStyle(fontSize: 30),
+            child: Text('select a location first !', style: TextStyle(fontSize: 30),
             ),
           );
         }),

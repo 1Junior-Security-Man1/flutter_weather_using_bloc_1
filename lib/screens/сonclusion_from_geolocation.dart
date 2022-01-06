@@ -20,42 +20,42 @@ class ConclusionFromGeolocation extends StatelessWidget {
   //     temperatureUnit == TemperatureUnit.fahrenheit
   //         ? '${_toFahrenheit(temp)}°F'
   //         : '${temp.round()}°C';
-  // Image _mapWeatherIconToIcon({WeatherIcons weatherIcons}) {
-  //   Image image;
-  //   switch (weatherIcons) {
-  //     case WeatherIcons.clearSkyD:
-  //       image = Image.asset('assets/weatherImage/01d@2x.png');
-  //       break;
-  //     case WeatherIcons.clearSkyN:
-  //       image = Image.asset('assets/weatherImage/01n@2x.png');
-  //       break;
-  //     case WeatherIcons.fewCloudsD:
-  //       image = Image.asset('assets/weatherImage/02d@2x.png');
-  //       break;
-  //     case WeatherIcons.fewCloudsN:
-  //       image = Image.asset('assets/weatherImage/02n@2x.png');
-  //       break;
-  //     case WeatherIcons.scatteredClouds:
-  //       image = Image.asset('assets/weatherImage/03d@2x.png');
-  //       break;
-  //     case WeatherIcons.brokenClouds:
-  //       image = Image.asset('assets/weatherImage/04d@2x.png');
-  //       break;
-  //     case WeatherIcons.showerRain:
-  //       image = Image.asset('assets/weatherImage/09d@2x.png');
-  //       break;
-  //     case WeatherIcons.rainD:
-  //       image = Image.asset('assets/weatherImage/10d@2x.png');
-  //       break;
-  //     case WeatherIcons.rainN:
-  //       image = Image.asset('assets/weatherImage/10n@2x.png');
-  //       break;
-  //     case WeatherIcons.mist:
-  //       image = Image.asset('assets/weatherImage/04d@2x.png');
-  //       break;
-  //   }
-  //   return image;
-  // }
+  Image _mapWeatherIconToIcon({WeatherIcons weatherIcons}) {
+    Image image;
+    switch (weatherIcons) {
+      case WeatherIcons.clearSkyD:
+        image = Image.asset('assets/weatherImage/01d@2x.png');
+        break;
+      case WeatherIcons.clearSkyN:
+        image = Image.asset('assets/weatherImage/01n@2x.png');
+        break;
+      case WeatherIcons.fewCloudsD:
+        image = Image.asset('assets/weatherImage/02d@2x.png');
+        break;
+      case WeatherIcons.fewCloudsN:
+        image = Image.asset('assets/weatherImage/02n@2x.png');
+        break;
+      case WeatherIcons.scatteredClouds:
+        image = Image.asset('assets/weatherImage/03d@2x.png');
+        break;
+      case WeatherIcons.brokenClouds:
+        image = Image.asset('assets/weatherImage/04d@2x.png');
+        break;
+      case WeatherIcons.showerRain:
+        image = Image.asset('assets/weatherImage/09d@2x.png');
+        break;
+      case WeatherIcons.rainD:
+        image = Image.asset('assets/weatherImage/10d@2x.png');
+        break;
+      case WeatherIcons.rainN:
+        image = Image.asset('assets/weatherImage/10n@2x.png');
+        break;
+      case WeatherIcons.mist:
+        image = Image.asset('assets/weatherImage/04d@2x.png');
+        break;
+    }
+    return image;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +74,11 @@ class ConclusionFromGeolocation extends StatelessWidget {
                     color: Colors.white),
               ),
               SizedBox(height: 35),
-              //_mapWeatherIconToIcon(weatherIcons: weatherGeolocation.weatherIcon.weatherIcons),
+              // _mapWeatherIconToIcon(weatherIcons: weatherGeolocation.weatherIcon.weatherIcons) ?? Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(width: 45),
+                  _mapWeatherIconToIcon(weatherIcons: weatherGeolocation.weatherIcon.weatherIcons) ?? Container(),
                   //Add an icon here
                   //_mapWeatherConditionToIcon(weatherCondition: weather.weatherCondition),
                   Padding(
